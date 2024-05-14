@@ -4,7 +4,7 @@ namespace WDWShiftX.Models
 {
     public class ShiftTitle
     {
-        public int ShiftTitleId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Display(Name = "Shift Title")]

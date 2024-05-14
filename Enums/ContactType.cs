@@ -4,6 +4,7 @@
     {
         none,
         email,
-        text
+        text,
+        both
     }
 }

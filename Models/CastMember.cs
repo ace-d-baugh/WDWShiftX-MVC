@@ -30,6 +30,6 @@ namespace WDWShiftX.Models
 
         // Photo
 
-        // Proficiencies
+        // Proficiencies is an array of ShiftTitles selected by the user
     }
 }

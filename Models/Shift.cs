@@ -5,7 +5,7 @@ namespace WDWShiftX.Models
 {
     public class Shift
     {
-        public int ShiftId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string? CastMemberId { get; set; }
