@@ -27,5 +27,9 @@ namespace WDWShiftX.Models
 
         [Required]
         public Ranks Rank { get; set; } = Ranks.Guest;
+
+        // Photo
+
+        // Proficiencies
     }
 }
