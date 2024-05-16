@@ -28,8 +28,18 @@ namespace WDWShiftX.Models
         [Required]
         public Ranks Rank { get; set; } = Ranks.Guest;
 
+        [Required]
+        [Display(Name = "Premium Status")]
+        public bool Premium { get; set; } = false;
+
         // Photo
+        public byte[]? ImageData { get; set; }
+        public string? ImageType { get; set; }
+
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
 
         // Proficiencies is an array of ShiftTitles selected by the user
+
     }
 }

@@ -46,6 +46,14 @@ namespace WDWShiftX.Models
         // Status is a dropdown and comes from ShiftStatus Enum
         [Required]
         [Display(Name = "Shift Status")]
-        public ShiftStatus Status { get; set; } = ShiftStatus.Active;
+        public ShiftStatus Status { get; set; } = ShiftStatus.Inactive;
+
+        [Required]
+        [Display(Name = "Trade?")]
+        public bool Trade { get; set; } = false;
+
+        [Required]
+        [Display(Name = "Give Away?")]
+        public bool Give { get; set; } = false;
     }
 }
