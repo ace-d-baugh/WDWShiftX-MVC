@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace WDWShiftX.Migrations
 {
     /// <inheritdoc />
-    public partial class _0001 : Migration
+    public partial class AddAppModels : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,6 +31,14 @@ namespace WDWShiftX.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
+                    FirstName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    NotificationsOn = table.Column<bool>(type: "boolean", nullable: false),
+                    ContactType = table.Column<int>(type: "integer", nullable: false),
+                    Rank = table.Column<int>(type: "integer", nullable: false),
+                    Premium = table.Column<bool>(type: "boolean", nullable: false),
+                    ImageData = table.Column<byte[]>(type: "bytea", nullable: true),
+                    ImageType = table.Column<string>(type: "text", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -49,6 +57,32 @@ namespace WDWShiftX.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CMRoles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    RoleName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CMRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Properties",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Properties", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -157,6 +191,103 @@ namespace WDWShiftX.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CMRoleProperty",
+                columns: table => new
+                {
+                    CMRolesId = table.Column<int>(type: "integer", nullable: false),
+                    PropertiesId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CMRoleProperty", x => new { x.CMRolesId, x.PropertiesId });
+                    table.ForeignKey(
+                        name: "FK_CMRoleProperty_CMRoles_CMRolesId",
+                        column: x => x.CMRolesId,
+                        principalTable: "CMRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CMRoleProperty_Properties_PropertiesId",
+                        column: x => x.PropertiesId,
+                        principalTable: "Properties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShiftTitles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Title = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    CMRoleId = table.Column<int>(type: "integer", nullable: false),
+                    PropertyId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShiftTitles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ShiftTitles_CMRoles_CMRoleId",
+                        column: x => x.CMRoleId,
+                        principalTable: "CMRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ShiftTitles_Properties_PropertyId",
+                        column: x => x.PropertyId,
+                        principalTable: "Properties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Shifts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ShiftTitleId = table.Column<int>(type: "integer", nullable: false),
+                    CMRoleId = table.Column<int>(type: "integer", nullable: false),
+                    PropertyId = table.Column<int>(type: "integer", nullable: false),
+                    ShiftStart = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ShiftEnd = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Comments = table.Column<string>(type: "text", nullable: true),
+                    Overtime = table.Column<bool>(type: "boolean", nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    Trade = table.Column<bool>(type: "boolean", nullable: false),
+                    Give = table.Column<bool>(type: "boolean", nullable: false),
+                    CastMemberId = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Shifts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Shifts_AspNetUsers_CastMemberId",
+                        column: x => x.CastMemberId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Shifts_CMRoles_CMRoleId",
+                        column: x => x.CMRoleId,
+                        principalTable: "CMRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Shifts_Properties_PropertyId",
+                        column: x => x.PropertyId,
+                        principalTable: "Properties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Shifts_ShiftTitles_ShiftTitleId",
+                        column: x => x.ShiftTitleId,
+                        principalTable: "ShiftTitles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -193,6 +324,41 @@ namespace WDWShiftX.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CMRoleProperty_PropertiesId",
+                table: "CMRoleProperty",
+                column: "PropertiesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Shifts_CastMemberId",
+                table: "Shifts",
+                column: "CastMemberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Shifts_CMRoleId",
+                table: "Shifts",
+                column: "CMRoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Shifts_PropertyId",
+                table: "Shifts",
+                column: "PropertyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Shifts_ShiftTitleId",
+                table: "Shifts",
+                column: "ShiftTitleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShiftTitles_CMRoleId",
+                table: "ShiftTitles",
+                column: "CMRoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShiftTitles_PropertyId",
+                table: "ShiftTitles",
+                column: "PropertyId");
         }
 
         /// <inheritdoc />
@@ -214,10 +380,25 @@ namespace WDWShiftX.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "CMRoleProperty");
+
+            migrationBuilder.DropTable(
+                name: "Shifts");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "ShiftTitles");
+
+            migrationBuilder.DropTable(
+                name: "CMRoles");
+
+            migrationBuilder.DropTable(
+                name: "Properties");
         }
     }
 }

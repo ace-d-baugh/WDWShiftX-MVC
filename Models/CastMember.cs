@@ -9,7 +9,7 @@ namespace WDWShiftX.Models
     {
         [Required]
         [Display(Name = "First Name")]
-        [StringLength(50,ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
         public string? FirstName { get; set; }
 
         [Required]
@@ -39,7 +39,6 @@ namespace WDWShiftX.Models
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
 
-        // Proficiencies is an array of ShiftTitles selected by the user
-
+        public ICollection<Shift> Shifts { get; set; } = new List<Shift>();
     }
 }

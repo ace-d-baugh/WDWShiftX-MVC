@@ -7,21 +7,23 @@ namespace WDWShiftX.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        public string? CastMemberId { get; set; }
-
-        // ShiftTitle added from ShiftTitle Database
+        // ShiftTitle added from ShiftTitle Database in searchable Drop Down Menu
+        public int ShiftTitleId { get; set; }
         [Required]
         [Display(Name = "Shift Title")]
-        public string? ShiftTitleName { get; set; }
+        public ShiftTitle? ShiftTitle { get; set; }
 
-        // Role comes from ShiftTitle Database
+        // Role comes from ShiftTitle Database and not needed for this class
+        public int CMRoleId { get; set; }
         [Required]
-        public string? Role { get; set;}
+        [Display(Name = "Role")]
+        public CMRole? CMRole { get; set; }
 
-        // Property comes from ShiftTitle Database
+        // Property comes from ShiftTitle Database and not needed for this class
+        public int PropertyId { get; set; }
         [Required]
-        public string? Property { get; set;}
+        [Display(Name = "Property")]
+        public Property? Property { get; set; }
 
         // StartTime comes from user input
         [Required]
@@ -33,7 +35,7 @@ namespace WDWShiftX.Models
         [Required]
         [DataType(DataType.DateTime)]
         [Display(Name = "Shift End")]
-        public DateTime? ShiftEnd { get; set;}
+        public DateTime? ShiftEnd { get; set; }
 
         // Comments is a text area and comes from user input
         public string? Comments { get; set; }
@@ -55,5 +57,6 @@ namespace WDWShiftX.Models
         [Required]
         [Display(Name = "Give Away?")]
         public bool Give { get; set; } = false;
+
     }
 }
