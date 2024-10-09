@@ -10,23 +10,23 @@ using WDWShiftX.Models;
 
 namespace WDWShiftX.Controllers
 {
-    public class PropertiesController : Controller
+    public class CMRolesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public PropertiesController(ApplicationDbContext context)
+        public CMRolesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Properties
+        // GET: CMRoles
         public async Task<IActionResult> Index()
         {
-            var properties = await _context.Properties.OrderBy(p => p.Name).ToListAsync();
-            return View(properties);
+            var roles = (await _context.CMRoles.OrderBy(r => r.RoleName).ToListAsync());
+            return View(roles);
         }
 
-        // GET: Properties/Details/5
+        // GET: CMRoles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,39 +34,39 @@ namespace WDWShiftX.Controllers
                 return NotFound();
             }
 
-            var @property = await _context.Properties
+            var cMRole = await _context.CMRoles
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (@property == null)
+            if (cMRole == null)
             {
                 return NotFound();
             }
 
-            return View(@property);
+            return View(cMRole);
         }
 
-        // GET: Properties/Create
+        // GET: CMRoles/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Properties/Create
+        // POST: CMRoles/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Property @property)
+        public async Task<IActionResult> Create([Bind("Id,RoleName")] CMRole cMRole)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(@property);
+                _context.Add(cMRole);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(@property);
+            return View(cMRole);
         }
 
-        // GET: Properties/Edit/5
+        // GET: CMRoles/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,22 +74,22 @@ namespace WDWShiftX.Controllers
                 return NotFound();
             }
 
-            var @property = await _context.Properties.FindAsync(id);
-            if (@property == null)
+            var cMRole = await _context.CMRoles.FindAsync(id);
+            if (cMRole == null)
             {
                 return NotFound();
             }
-            return View(@property);
+            return View(cMRole);
         }
 
-        // POST: Properties/Edit/5
+        // POST: CMRoles/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Property @property)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,RoleName")] CMRole cMRole)
         {
-            if (id != @property.Id)
+            if (id != cMRole.Id)
             {
                 return NotFound();
             }
@@ -98,12 +98,12 @@ namespace WDWShiftX.Controllers
             {
                 try
                 {
-                    _context.Update(@property);
+                    _context.Update(cMRole);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PropertyExists(@property.Id))
+                    if (!CMRoleExists(cMRole.Id))
                     {
                         return NotFound();
                     }
@@ -114,10 +114,10 @@ namespace WDWShiftX.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(@property);
+            return View(cMRole);
         }
 
-        // GET: Properties/Delete/5
+        // GET: CMRoles/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,34 +125,34 @@ namespace WDWShiftX.Controllers
                 return NotFound();
             }
 
-            var @property = await _context.Properties
+            var cMRole = await _context.CMRoles
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (@property == null)
+            if (cMRole == null)
             {
                 return NotFound();
             }
 
-            return View(@property);
+            return View(cMRole);
         }
 
-        // POST: Properties/Delete/5
+        // POST: CMRoles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var @property = await _context.Properties.FindAsync(id);
-            if (@property != null)
+            var cMRole = await _context.CMRoles.FindAsync(id);
+            if (cMRole != null)
             {
-                _context.Properties.Remove(@property);
+                _context.CMRoles.Remove(cMRole);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PropertyExists(int id)
+        private bool CMRoleExists(int id)
         {
-            return _context.Properties.Any(e => e.Id == id);
+            return _context.CMRoles.Any(e => e.Id == id);
         }
     }
 }
