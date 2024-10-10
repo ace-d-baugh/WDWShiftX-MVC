@@ -22,7 +22,7 @@ namespace WDWShiftX.Controllers
         // GET: CMRoles
         public async Task<IActionResult> Index()
         {
-            var roles = (await _context.CMRoles.OrderBy(r => r.RoleName).ToListAsync());
+            var roles = await _context.CMRoles.OrderBy(x => x.RoleName).ToListAsync();
             return View(roles);
         }
 

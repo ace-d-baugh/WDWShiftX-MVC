@@ -8,20 +8,21 @@ namespace WDWShiftX.Models
 
         // Creation of a new ShiftTitle is behind admin permissions for CoPro or above
         [Required]
-        [Display(Name = "Shift Title")]
+        [Display(Name = "Shift Name")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
-        public string? Title { get; set; }
+        public string? ShiftName { get; set; }
 
         // Role comes from ShiftTitle Database and not needed for this class
-        public int CMRoleId { get; set; }
         [Required]
         [Display(Name = "Role")]
-        public CMRole? CMRole { get; set; }
+        public int? CMRoleId { get; set; }
 
         // Property comes from ShiftTitle Database and not needed for this class
-        public int PropertyId { get; set; }
         [Required]
         [Display(Name = "Property")]
-        public Property? Property { get; set; }
+        public int? PropertyId { get; set; }
+
+        public virtual CMRole? CMRole { get; set; }  // Navigation property for CMRole
+        public virtual Property? Property { get; set; }  // Navigation property for Property
     }
 }

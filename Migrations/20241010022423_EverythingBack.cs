@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace WDWShiftX.Migrations
 {
     /// <inheritdoc />
-    public partial class AddAppModels : Migration
+    public partial class EverythingBack : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -78,7 +78,7 @@ namespace WDWShiftX.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
+                    PropertyName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -221,7 +221,7 @@ namespace WDWShiftX.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Title = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    ShiftName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     CMRoleId = table.Column<int>(type: "integer", nullable: false),
                     PropertyId = table.Column<int>(type: "integer", nullable: false)
                 },

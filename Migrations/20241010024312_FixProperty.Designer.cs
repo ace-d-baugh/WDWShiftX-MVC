@@ -12,8 +12,8 @@ using WDWShiftX.Data;
 namespace WDWShiftX.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241009213324_AddAppModels")]
-    partial class AddAppModels
+    [Migration("20241010024312_FixProperty")]
+    partial class FixProperty
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -294,7 +294,7 @@ namespace WDWShiftX.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
+                    b.Property<string>("PropertyName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
@@ -374,7 +374,7 @@ namespace WDWShiftX.Migrations
                     b.Property<int>("PropertyId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("ShiftName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");

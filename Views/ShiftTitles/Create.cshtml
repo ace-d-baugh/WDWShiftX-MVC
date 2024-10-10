@@ -1,0 +1,42 @@
+﻿@model WDWShiftX.Models.ShiftTitle
+
+@{
+    ViewData["Title"] = "Add New WDW Shift Name";
+}
+
+<h1>Add New</h1>
+
+<h4>Shift Name</h4>
+<h6>As seen on Schedule View</h6>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-2">
+                <label asp-for="ShiftName" class="control-label"></label>
+                <input asp-for="ShiftName" class="form-control" />
+                <span asp-validation-for="ShiftName" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="CMRoleId" class="control-label">Role</label>
+                <select asp-for="CMRoleId" class ="form-control" asp-items="ViewBag.CMRoleId"></select>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="PropertyId" class="control-label">Property</label>
+                <select asp-for="PropertyId" class ="form-control" asp-items="ViewBag.PropertyId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

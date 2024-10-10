@@ -22,7 +22,7 @@ namespace WDWShiftX.Controllers
         // GET: Properties
         public async Task<IActionResult> Index()
         {
-            var properties = await _context.Properties.OrderBy(p => p.Name).ToListAsync();
+            var properties = await _context.Properties.OrderBy(x => x.PropertyName).ToListAsync();
             return View(properties);
         }
 
@@ -55,7 +55,7 @@ namespace WDWShiftX.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Property @property)
+        public async Task<IActionResult> Create([Bind("Id,PropertyName")] Property @property)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace WDWShiftX.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Property @property)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,PropertyName")] Property @property)
         {
             if (id != @property.Id)
             {
