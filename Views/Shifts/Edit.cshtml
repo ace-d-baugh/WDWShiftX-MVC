@@ -1,0 +1,69 @@
+﻿@model WDWShiftX.Models.Shift
+
+@{
+    ViewData["Title"] = "Edit your Shift";
+}
+
+<h1>Edit</h1>
+
+<h4>Shift</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group mb-2">
+                <label asp-for="ShiftTitleId" class="control-label">Shift Name</label>
+                <select asp-for="ShiftTitleId" class="form-control" asp-items="ViewBag.ShiftTitleId"></select>
+                <span asp-validation-for="ShiftTitleId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="ShiftStart" class="control-label"></label>
+                <input asp-for="ShiftStart" class="form-control" />
+                <span asp-validation-for="ShiftStart" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="ShiftEnd" class="control-label"></label>
+                <input asp-for="ShiftEnd" class="form-control" />
+                <span asp-validation-for="ShiftEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="Comments" class="control-label"></label>
+                <textarea asp-for="Comments" class="form-control"></textarea>
+                <span asp-validation-for="Comments" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check mb-2">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Overtime" /> @Html.DisplayNameFor(model => model.Overtime)
+                </label>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control"></select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check mb-2">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Trade" /> @Html.DisplayNameFor(model => model.Trade)
+                </label>
+            </div>
+            <div class="form-group form-check mb-2">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Give" /> @Html.DisplayNameFor(model => model.Give)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

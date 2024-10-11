@@ -309,7 +309,7 @@ namespace WDWShiftX.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CMRoleId")
+                    b.Property<int?>("CMRoleId")
                         .HasColumnType("integer");
 
                     b.Property<string>("CastMemberId")
@@ -324,7 +324,7 @@ namespace WDWShiftX.Migrations
                     b.Property<bool>("Overtime")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("PropertyId")
+                    b.Property<int?>("PropertyId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("ShiftEnd")
@@ -365,10 +365,12 @@ namespace WDWShiftX.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CMRoleId")
+                    b.Property<int?>("CMRoleId")
+                        .IsRequired()
                         .HasColumnType("integer");
 
-                    b.Property<int>("PropertyId")
+                    b.Property<int?>("PropertyId")
+                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<string>("ShiftName")
@@ -455,9 +457,7 @@ namespace WDWShiftX.Migrations
                 {
                     b.HasOne("WDWShiftX.Models.CMRole", "CMRole")
                         .WithMany()
-                        .HasForeignKey("CMRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CMRoleId");
 
                     b.HasOne("WDWShiftX.Models.CastMember", null)
                         .WithMany("Shifts")
@@ -465,9 +465,7 @@ namespace WDWShiftX.Migrations
 
                     b.HasOne("WDWShiftX.Models.Property", "Property")
                         .WithMany()
-                        .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PropertyId");
 
                     b.HasOne("WDWShiftX.Models.ShiftTitle", "ShiftTitle")
                         .WithMany()

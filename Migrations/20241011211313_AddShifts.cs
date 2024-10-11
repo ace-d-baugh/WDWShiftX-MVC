@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace WDWShiftX.Migrations
 {
     /// <inheritdoc />
-    public partial class EverythingBack : Migration
+    public partial class AddShifts : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -249,8 +249,6 @@ namespace WDWShiftX.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ShiftTitleId = table.Column<int>(type: "integer", nullable: false),
-                    CMRoleId = table.Column<int>(type: "integer", nullable: false),
-                    PropertyId = table.Column<int>(type: "integer", nullable: false),
                     ShiftStart = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ShiftEnd = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Comments = table.Column<string>(type: "text", nullable: true),
@@ -258,6 +256,8 @@ namespace WDWShiftX.Migrations
                     Status = table.Column<int>(type: "integer", nullable: false),
                     Trade = table.Column<bool>(type: "boolean", nullable: false),
                     Give = table.Column<bool>(type: "boolean", nullable: false),
+                    CMRoleId = table.Column<int>(type: "integer", nullable: true),
+                    PropertyId = table.Column<int>(type: "integer", nullable: true),
                     CastMemberId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -272,14 +272,12 @@ namespace WDWShiftX.Migrations
                         name: "FK_Shifts_CMRoles_CMRoleId",
                         column: x => x.CMRoleId,
                         principalTable: "CMRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Shifts_Properties_PropertyId",
                         column: x => x.PropertyId,
                         principalTable: "Properties",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Shifts_ShiftTitles_ShiftTitleId",
                         column: x => x.ShiftTitleId,

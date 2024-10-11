@@ -9,21 +9,6 @@ namespace WDWShiftX.Models
 
         // ShiftTitle added from ShiftTitle Database in searchable Drop Down Menu
         public int ShiftTitleId { get; set; }
-        [Required]
-        [Display(Name = "Shift Title")]
-        public ShiftTitle? ShiftTitle { get; set; }
-
-        // Role comes from ShiftTitle Database and not needed for this class
-        public int CMRoleId { get; set; }
-        [Required]
-        [Display(Name = "Role")]
-        public CMRole? CMRole { get; set; }
-
-        // Property comes from ShiftTitle Database and not needed for this class
-        public int PropertyId { get; set; }
-        [Required]
-        [Display(Name = "Property")]
-        public Property? Property { get; set; }
 
         // StartTime comes from user input
         [Required]
@@ -58,5 +43,8 @@ namespace WDWShiftX.Models
         [Display(Name = "Give Away?")]
         public bool Give { get; set; } = false;
 
+        public virtual ShiftTitle? ShiftTitle { get; set; } // Navigation property for ShiftTitle
+        public virtual CMRole? CMRole { get; set; }  // Navigation property for CMRole
+        public virtual Property? Property { get; set; }  // Navigation property for Property
     }
 }
